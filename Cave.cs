@@ -8,12 +8,19 @@ namespace Caverns_Routing_Application
 {
     class Cave
     {
-        private int x {get;}
-        private int y {get;}
+        //Identifier, coordinates
+        private int id;
+        private int x;
+        private int y;
 
-        Cave(int x, int y){
+        public Cave(int id, int x, int y){
+            this.id = id;
             this.x = x;
             this.y = y;
         }
+
+        public int Id {set{id = value;} get{return id;}}
+        public int X {set{x = value;} get{return x;}}
+        public int Y {set{y = value;} get{return y;}}
     }
 }
