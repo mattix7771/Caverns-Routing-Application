@@ -32,7 +32,30 @@ namespace Caverns_Routing_Application
 
             //Caves relationships
             int[] relationships = all.Skip(cav_num*2+1).ToArray();
+
+            //Caves visited
+            List <Cave> visited = new List<Cave>();
+
+            //Starting and ending node
+            Cave start = caves[0];
+            Cave end = caves[-1];
             
+            bool success = false;
+
+
+            while(success == false){
+
+                Cave current_cave = start;
+                visited.Add(current_cave);
+
+                List <int> current_relationships = new List<int>();
+                for(int i = 0; i < cav_num; i++){
+                    current_relationships.Add(current_cave.Id);
+                }
+                
+
+
+            }
 
 
 
