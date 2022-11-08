@@ -12,18 +12,29 @@ namespace Caverns_Routing_Application
         private int id;
         private int x;
         private int y;
-        private List<int> relationships = new List<int>();
+        private List<Cave> relationships = new List<Cave>();
 
-        public Cave(int id, int x, int y, List<int> rel){
+        public Cave(int id, int x, int y, List<Cave> rel){
             this.id = id;
             this.x = x;
             this.y = y;
             this.relationships = rel;
         }
 
+        public Cave(int id, int x, int y){
+            this.id = id;
+            this.x = x;
+            this.y = y;
+        }
+
         public int Id {set{id = value;} get{return id;}}
         public int X {set{x = value;} get{return x;}}
         public int Y {set{y = value;} get{return y;}}
-        public List<int> Relationsips {set{relationships = value;} get{return relationships;}}
+        public List<Cave> Relationsips {set{relationships = value;} get{return relationships;}}
+
+
+        public String toString(){
+            return "Cave " + id + ": (" + "x: " + x + " y: " + y + ")";
+        }
     }
 }

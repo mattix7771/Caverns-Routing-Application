@@ -33,15 +33,13 @@ namespace Caverns_Routing_Application
 
             //Add info to Cave objects
             for(int i = 0, j = 1; i < cav_num; i++, j+=2){
-                List <int> current_relationships = new List<int>();
+                List <Cave> current_relationships = new List<Cave>();
+
                 for(int p = 0; p/7 < cav_num; p+=cav_num){
-                    current_relationships.Add(relationships[i+p]);
-                    
-                    /*
                     int temp = relationships[i+p];
+
                     if(temp != 0)
-                        current_relationships.Add(relationships[i+p]);*/
-                    
+                        current_relationships.Add(new Cave((p/7)+1, all[(((p+7)/7)*2)-1], all[((p+7)/7)*2]));
                 }
                 caves.Add(new Cave(i+1, all[j], all[j+1], current_relationships));
             }
@@ -49,33 +47,45 @@ namespace Caverns_Routing_Application
             //Caves visited
             List <Cave> visited = new List<Cave>();
 
+            //Caves to visit
+            Stack<Cave> toVisit = new Stack<Cave>();
+
             //Starting and ending node
             Cave start = caves[0];
             Cave end = caves[caves.Count-1];
             
             bool success = false;
 
-            for(int p = 0; p < caves.Count; p++){
-                    //Console.WriteLine("Cave " + caves[p].Id);
-                    Console.WriteLine(" Rel: " + caves[p].Relationsips[3]);
-            }
 
-            /*
+            
             while(success == false){
 
                 Cave current_cave = start;
                 visited.Add(current_cave);
 
+
+                List<double> distances = new List<double>();
+                foreach(Cave cave in current_cave.Relationsips){
+                    distances.Add(Distance(current_cave, cave));
+                }
+
+                
+
                 
                 
                 
 
 
-            }*/
+            }
 
 
 
             
+        }
+
+        public static double Distance(Cave x, Cave y){
+            double distance = Math.Sqrt( Math.Pow(y.X - x.X, 2) + Math.Pow(y.Y - x.Y, 2) );
+            return distance;
         }
     }
 }
