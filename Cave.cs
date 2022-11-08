@@ -14,10 +14,11 @@ namespace Caverns_Routing_Application
         private int y;
         private List<int> relationships = new List<int>();
 
-        public Cave(int id, int x, int y){
+        public Cave(int id, int x, int y, List<int> rel){
             this.id = id;
             this.x = x;
             this.y = y;
+            this.relationships = rel;
         }
 
         public int Id {set{id = value;} get{return id;}}
