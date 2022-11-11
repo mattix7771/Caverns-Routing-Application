@@ -40,8 +40,17 @@ namespace Caverns_Routing_Application
 
                     if(temp != 0)
                         current_relationships.Add(new Cave((p/7)+1, all[(((p+7)/7)*2)-1], all[((p+7)/7)*2]));
+                    
+
                 }
                 caves.Add(new Cave(i+1, all[j], all[j+1], current_relationships));
+            }
+
+            //Determine distances between caves
+            foreach(Cave cave in caves){
+                foreach(Cave rel in cave.Relationsips){
+                    cave.Distances.Add(Distance(rel, cave));
+                }
             }
 
             //Caves visited
@@ -56,27 +65,32 @@ namespace Caverns_Routing_Application
             
             bool success = false;
 
+            
 
             
-            while(success == false){
+            //while(success == false){
 
-                Cave current_cave = start;
+                Cave current_cave = caves[3];
+                List<Cave> current_rel = new List<Cave>();
                 visited.Add(current_cave);
 
-
-                List<double> distances = new List<double>();
                 foreach(Cave cave in current_cave.Relationsips){
-                    distances.Add(Distance(current_cave, cave));
+
+                    current_rel.Add();
+
+                    // double max_value = current_cave.Distances.Max();
+                    // int index = current_cave.Distances.IndexOf(max_value);
+                    // toVisit.Push(current_cave.Relationsips[index]);
                 }
 
-                
 
                 
-                
-                
+            //}
 
-
-            }
+            Console.WriteLine(toVisit.Pop().Id);
+            Console.WriteLine(toVisit.Pop().Id);
+            Console.WriteLine(toVisit.Pop().Id);
+            Console.WriteLine(toVisit.Pop().Id);
 
 
 

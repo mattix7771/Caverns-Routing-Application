@@ -13,6 +13,7 @@ namespace Caverns_Routing_Application
         private int x;
         private int y;
         private List<Cave> relationships = new List<Cave>();
+        private List<double> distances = new List<double>();
 
         public Cave(int id, int x, int y, List<Cave> rel){
             this.id = id;
@@ -31,6 +32,7 @@ namespace Caverns_Routing_Application
         public int X {set{x = value;} get{return x;}}
         public int Y {set{y = value;} get{return y;}}
         public List<Cave> Relationsips {set{relationships = value;} get{return relationships;}}
+        public List<double> Distances {set{distances = value;} get{return distances;}}
 
 
         public String toString(){
