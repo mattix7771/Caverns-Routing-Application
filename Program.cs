@@ -11,9 +11,10 @@ namespace Caverns_Routing_Application
         {
             //args[0] = @"C:\Users\matti\OneDrive\Napier\S3 - Artificial Intelligence\Caverns Routing Application\input1";
             //Get file location from argument
-            //string path = args[0] + ".cav";
+           // string path = args[0] + ".cav";
             string path  = @"C:\Users\matti\OneDrive\Napier\S3 - Artificial Intelligence\Caverns Routing Application\input1.cav";
 
+            Console.WriteLine(path);
             //Check if file exists
             if(!File.Exists(path)){
                 Console.WriteLine("File does not exist");
@@ -76,12 +77,13 @@ namespace Caverns_Routing_Application
 
                 foreach(Cave cave in current_cave.Relationsips){
 
-                    current_rel.Add();
+                   //TODO  Put back current_rel.Add();
 
                     // double max_value = current_cave.Distances.Max();
                     // int index = current_cave.Distances.IndexOf(max_value);
                     // toVisit.Push(current_cave.Relationsips[index]);
-                }
+
+                    //add distance attribute to cave object and that equals the nodes distance from the starting node               }
 
 
                 
