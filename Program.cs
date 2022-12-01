@@ -41,17 +41,16 @@ namespace Caverns_Routing_Application
                 for(int p = 0; p/7 < cav_num; p+=cav_num){
                     int temp = relationships[i+p];
 
-                    if(temp != 0)
+                    if(temp != 0){
                         current_relationships.Add(new Cave((p/7)+1, all[(((p+7)/7)*2)-1], all[((p+7)/7)*2]));
-                    
-
+                    }
                 }
                 caves.Add(new Cave(i+1, all[j], all[j+1], current_relationships));
             }
 
             //Determine distances between caves
             foreach(Cave cave in caves){
-                
+                cave.Distance = CalcDistance(cave, startCave);
             }
 
             //Caves visited
@@ -83,7 +82,8 @@ namespace Caverns_Routing_Application
                     // int index = current_cave.Distances.IndexOf(max_value);
                     // toVisit.Push(current_cave.Relationsips[index]);
 
-                    //add distance attribute to cave object and that equals the nodes distance from the starting node               }
+                    //add distance attribute to cave object and that equals the nodes distance from the starting node
+                }
 
 
                 
@@ -99,8 +99,8 @@ namespace Caverns_Routing_Application
             
         }
 
-        public static double Distance(Cave x, Cave y){
-            double distance = Math.Sqrt( Math.Pow(y.X - x.X, 2) + Math.Pow(y.Y - x.Y, 2) );
+        public static double CalcDistance(Cave x, Cave y){
+            double distance = Math.Sqrt( Math.Pow(y.XCoordinate - x.XCoordinate, 2) + Math.Pow(y.YCoordinate - x.YCoordinate, 2) );
             return distance;
         }
     }
