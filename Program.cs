@@ -7,14 +7,16 @@ namespace Caverns_Routing_Application
 {
     class Program
     {
+        //Start and end node
+        static Cave startCave;
+        static Cave endCave;
         static void Main(string[] args)
         {
-            //args[0] = @"C:\Users\matti\OneDrive\Napier\S3 - Artificial Intelligence\Caverns Routing Application\input1";
             //Get file location from argument
-           // string path = args[0] + ".cav";
+            
+            //string path = args[0] + ".cav";
             string path  = @"C:\Users\matti\OneDrive\Napier\S3 - Artificial Intelligence\Caverns Routing Application\input1.cav";
 
-            Console.WriteLine(path);
             //Check if file exists
             if(!File.Exists(path)){
                 Console.WriteLine("File does not exist");
@@ -49,9 +51,7 @@ namespace Caverns_Routing_Application
 
             //Determine distances between caves
             foreach(Cave cave in caves){
-                foreach(Cave rel in cave.Relationsips){
-                    cave.Distances.Add(Distance(rel, cave));
-                }
+                
             }
 
             //Caves visited
@@ -61,8 +61,8 @@ namespace Caverns_Routing_Application
             Stack<Cave> toVisit = new Stack<Cave>();
 
             //Starting and ending node
-            Cave start = caves[0];
-            Cave end = caves[caves.Count-1];
+            startCave = caves[0];
+            endCave = caves[caves.Count-1];
             
             bool success = false;
 

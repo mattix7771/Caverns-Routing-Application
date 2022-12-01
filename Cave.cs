@@ -1,42 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Caverns_Routing_Application
 {
     class Cave
     {
-        //Identifier, coordinates
+        //Identifier, coordinates, distance and connected caves
         private int id;
-        private int x;
-        private int y;
+        private int xCoordinate;
+        private int yCoordinate;
+        private double distance;
         private List<Cave> relationships = new List<Cave>();
-        private List<double> distances = new List<double>();
 
-        public Cave(int id, int x, int y, List<Cave> rel){
+        public Cave(int id, int xCoordinate, int yCoordinate, double distance, List<Cave> relationships){
             this.id = id;
-            this.x = x;
-            this.y = y;
-            this.relationships = rel;
+            this.xCoordinate = xCoordinate;
+            this.yCoordinate = yCoordinate;
+            this.distance = distance;
+            this.relationships = relationships;
         }
 
-        public Cave(int id, int x, int y){
+        public Cave(int id, int x, int y, List<Cave> relationships){
             this.id = id;
-            this.x = x;
-            this.y = y;
+            this.xCoordinate = x;
+            this.yCoordinate = y;
+            this.relationships = relationships;
         }
 
         public int Id {set{id = value;} get{return id;}}
-        public int X {set{x = value;} get{return x;}}
-        public int Y {set{y = value;} get{return y;}}
+        public int XCoordinate {set{xCoordinate = value;} get{return xCoordinate;}}
+        public int YCoordinate {set{yCoordinate = value;} get{return yCoordinate;}}
+        public double Distance {set{distance = value;} get{return distance;}}
         public List<Cave> Relationsips {set{relationships = value;} get{return relationships;}}
-        public List<double> Distances {set{distances = value;} get{return distances;}}
 
 
         public String toString(){
-            return "Cave " + id + ": (" + "x: " + x + " y: " + y + ")";
+            return "Cave " + id + ": (" + "x: " + xCoordinate + " y: " + yCoordinate + ")";
         }
     }
 }
