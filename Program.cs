@@ -15,7 +15,7 @@ namespace Caverns_Routing_Application
             //Get file location from argument
             
             //string path = args[0] + ".cav";
-            string path  = @"C:\Users\matti\OneDrive\Napier\S3 - Artificial Intelligence\Caverns Routing Application\input1.cav";
+            string path  = @"C:\Users\matti\OneDrive\Napier\S3 - Artificial Intelligence\Caverns-Routing-Application\input1.cav";
 
             //Check if file exists
             if(!File.Exists(path)){
@@ -45,28 +45,25 @@ namespace Caverns_Routing_Application
                         current_relationships.Add(new Cave((p/7)+1, all[(((p+7)/7)*2)-1], all[((p+7)/7)*2]));
                     }
                 }
-                caves.Add(new Cave(i+1, all[j], all[j+1], current_relationships));
+                //Create the cave with high distance
+                caves.Add(new Cave(i+1, all[j], all[j+1], 1000, current_relationships));
             }
 
-            //Determine distances between caves
-            foreach(Cave cave in caves){
-                cave.Distance = CalcDistance(cave, startCave);
-            }
+            //Starting and ending node
+            startCave = caves[0];
+            endCave = caves[caves.Count - 1];
 
             //Caves visited
             List <Cave> visited = new List<Cave>();
 
-            //Caves to visit
+            //Caves to visit/ Priority queue
             Stack<Cave> toVisit = new Stack<Cave>();
 
-            //Starting and ending node
-            startCave = caves[0];
-            endCave = caves[caves.Count-1];
-            
+            //End node reached
             bool success = false;
 
             
-
+            
             
             //while(success == false){
 
