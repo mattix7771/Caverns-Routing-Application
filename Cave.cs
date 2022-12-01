@@ -27,6 +27,12 @@ namespace Caverns_Routing_Application
             this.relationships = relationships;
         }
 
+        public Cave(int id, int x, int y){
+            this.id = id;
+            this.xCoordinate = x;
+            this.yCoordinate = y;
+        }
+
         public int Id {set{id = value;} get{return id;}}
         public int XCoordinate {set{xCoordinate = value;} get{return xCoordinate;}}
         public int YCoordinate {set{yCoordinate = value;} get{return yCoordinate;}}
