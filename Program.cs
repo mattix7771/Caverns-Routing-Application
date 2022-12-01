@@ -18,7 +18,7 @@ namespace Caverns_Routing_Application
         static Stack<Cave> toVisit = new Stack<Cave>();
 
         //End node reached
-        bool success = false;
+        static bool success = false;
 
         static void Main(string[] args)
         {
@@ -65,28 +65,20 @@ namespace Caverns_Routing_Application
 
             
             
-            //while(success == false){
+            while(success == false){
 
                 //Current cave
                 Cave current_cave = startCave;
 
+                //Calculate distances of neighbours
                 foreach(Cave cave in current_cave.Relationsips){
 
-                    caves[cave.Id-1].Distance = CalcDistance(caves[cave.Id-1], startCave);
+                    caves[cave.Id-1].Distance = CalcDistance(caves[cave.Id-1], current_cave) + current_cave.Distance;
+
+
+
                     toVisit.Push(caves[cave.Id-1]);
                 }
-
-
-
-                Console.WriteLine("OLD");
-                foreach(Cave x in toVisit)
-                    Console.WriteLine(x.Id);
-
-                SortStack(toVisit);
-                    
-                Console.WriteLine("NEW");
-                foreach(Cave x in toVisit)
-                    Console.WriteLine(x.Id);
                     
                     
                     
@@ -95,7 +87,7 @@ namespace Caverns_Routing_Application
 
 
                 
-            //}
+            }
 
             
 
@@ -105,6 +97,7 @@ namespace Caverns_Routing_Application
         //Eucledean distance calculator
         public static double CalcDistance(Cave x, Cave y){
             double distance = Math.Sqrt( Math.Pow(y.XCoordinate - x.XCoordinate, 2) + Math.Pow(y.YCoordinate - x.YCoordinate, 2) );
+            distance -= 1000;
             return distance;
         }
 
@@ -123,7 +116,7 @@ namespace Caverns_Routing_Application
                 double distance = value.Distance;
 
                 //Return items to input stack if not in order
-                while(temp_stack.Count > 0 && temp_stack.Peek().Distance >= distance){
+                while(temp_stack.Count > 0 && temp_stack.Peek().Distance < distance){
                     stack.Push(temp_stack.Pop());
                 }
                 //Add item to temporary stack
