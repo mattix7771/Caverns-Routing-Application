@@ -10,6 +10,16 @@ namespace Caverns_Routing_Application
         //Start and end node
         static Cave startCave;
         static Cave endCave;
+
+        //Caves visited
+        static List<Cave> visited = new List<Cave>();
+
+        //Caves to visit/ Priority queue
+        static Stack<Cave> toVisit = new Stack<Cave>();
+
+        //End node reached
+        bool success = false;
+
         static void Main(string[] args)
         {
             //Get file location from argument
@@ -45,7 +55,7 @@ namespace Caverns_Routing_Application
                         current_relationships.Add(new Cave((p/7)+1, all[(((p+7)/7)*2)-1], all[((p+7)/7)*2]));
                     }
                 }
-                //Create the cave with high distance
+                //Create the cave with unknown (high) distance
                 caves.Add(new Cave(i+1, all[j], all[j+1], 1000, current_relationships));
             }
 
@@ -53,52 +63,75 @@ namespace Caverns_Routing_Application
             startCave = caves[0];
             endCave = caves[caves.Count - 1];
 
-            //Caves visited
-            List <Cave> visited = new List<Cave>();
-
-            //Caves to visit/ Priority queue
-            Stack<Cave> toVisit = new Stack<Cave>();
-
-            //End node reached
-            bool success = false;
-
-            
             
             
             //while(success == false){
 
-                Cave current_cave = caves[3];
-                List<Cave> current_rel = new List<Cave>();
-                visited.Add(current_cave);
+                //Current cave
+                Cave current_cave = startCave;
 
                 foreach(Cave cave in current_cave.Relationsips){
 
-                   //TODO  Put back current_rel.Add();
-
-                    // double max_value = current_cave.Distances.Max();
-                    // int index = current_cave.Distances.IndexOf(max_value);
-                    // toVisit.Push(current_cave.Relationsips[index]);
-
-                    //add distance attribute to cave object and that equals the nodes distance from the starting node
+                    caves[cave.Id-1].Distance = CalcDistance(caves[cave.Id-1], startCave);
+                    toVisit.Push(caves[cave.Id-1]);
                 }
+
+
+
+                Console.WriteLine("OLD");
+                foreach(Cave x in toVisit)
+                    Console.WriteLine(x.Id);
+
+                SortStack(toVisit);
+                    
+                Console.WriteLine("NEW");
+                foreach(Cave x in toVisit)
+                    Console.WriteLine(x.Id);
+                    
+                    
+                    
+
+                   
 
 
                 
             //}
 
-            Console.WriteLine(toVisit.Pop().Id);
-            Console.WriteLine(toVisit.Pop().Id);
-            Console.WriteLine(toVisit.Pop().Id);
-            Console.WriteLine(toVisit.Pop().Id);
-
-
+            
 
             
         }
 
+        //Eucledean distance calculator
         public static double CalcDistance(Cave x, Cave y){
             double distance = Math.Sqrt( Math.Pow(y.XCoordinate - x.XCoordinate, 2) + Math.Pow(y.YCoordinate - x.YCoordinate, 2) );
             return distance;
+        }
+
+        //Method to order the stack by distances
+        public static void SortStack(Stack<Cave> stack){
+
+            //Check that there is more than 1 item in stack
+            if(stack.Count <= 0) return;
+
+            Stack<Cave> temp_stack = new Stack<Cave>();
+
+            //Loop for all items in stack
+            while(stack.Count > 0){
+
+                Cave value = stack.Pop();
+                double distance = value.Distance;
+
+                //Return items to input stack if not in order
+                while(temp_stack.Count > 0 && temp_stack.Peek().Distance >= distance){
+                    stack.Push(temp_stack.Pop());
+                }
+                //Add item to temporary stack
+                temp_stack.Push(value);
+            }
+
+            //Equate temporary and original stacks
+            toVisit = temp_stack;
         }
     }
 }
