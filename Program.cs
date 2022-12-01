@@ -64,30 +64,38 @@ namespace Caverns_Routing_Application
             endCave = caves[caves.Count - 1];
 
             
-            
+            //Main search loop
             while(success == false){
 
-                //Current cave
-                Cave current_cave = startCave;
+                //set urrent cave
+                Cave current_cave;
+
+                if(toVisit.Count == 0)
+                    current_cave = startCave;
+                else
+                    current_cave = toVisit.Pop();
+
+                Console.WriteLine(current_cave.Id);
+
+                if(current_cave == endCave)
+                    success = true;
+
+                //Add cave to visited list
+                visited.Add(current_cave);
 
                 //Calculate distances of neighbours
                 foreach(Cave cave in current_cave.Relationsips){
 
                     caves[cave.Id-1].Distance = CalcDistance(caves[cave.Id-1], current_cave) + current_cave.Distance;
-
-
-
-                    toVisit.Push(caves[cave.Id-1]);
+                    if(!visited.Contains(caves[cave.Id-1]))
+                        toVisit.Push(caves[cave.Id-1]);
                 }
-                    
-                    
-                    
-
-                   
-
-
                 
+                //Sort stack
+                SortStack(toVisit);
             }
+
+            
 
             
 
