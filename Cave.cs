@@ -11,13 +11,16 @@ namespace Caverns_Routing_Application
         private int yCoordinate;
         private double distance;
         private List<Cave> relationships = new List<Cave>();
+        private List<int> int_relationships = new List<int>();
 
-        public Cave(int id, int xCoordinate, int yCoordinate, double distance, List<Cave> relationships){
+        public Cave(int id, int xCoordinate, int yCoordinate, double distance, List<Cave> relationships, List<int> int_relationships)
+        {
             this.id = id;
             this.xCoordinate = xCoordinate;
             this.yCoordinate = yCoordinate;
             this.distance = distance;
             this.relationships = relationships;
+            this.int_relationships = int_relationships;
         }
 
         public Cave(int id, int x, int y, List<Cave> relationships){
@@ -38,8 +41,10 @@ namespace Caverns_Routing_Application
         public int YCoordinate {set{yCoordinate = value;} get{return yCoordinate;}}
         public double Distance {set{distance = value;} get{return distance;}}
         public List<Cave> Relationsips {set{relationships = value;} get{return relationships;}}
+        public List<int> Int_relationships { set { int_relationships = value; } get { return int_relationships; } }
 
 
+        
         public String toString(){
             return "Cave " + id + ": (" + "x: " + xCoordinate + " y: " + yCoordinate + ")";
         }

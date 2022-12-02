@@ -47,16 +47,18 @@ namespace Caverns_Routing_Application
             //Add info and create Cave objects
             for(int i = 0, j = 1; i < cav_num; i++, j+=2){
                 List <Cave> current_relationships = new List<Cave>();
+                List<int> int_current_relationships = new List<int>();
 
-                for(int p = 0; p/cav_num < cav_num; p+=cav_num){
+                for (int p = 0; p/cav_num < cav_num; p+=cav_num){
                     int temp = relationships[i+p];
 
                     if(temp != 0){
                         current_relationships.Add(new Cave((p/cav_num)+1, all[(((p+cav_num)/cav_num)*2)-1], all[((p+cav_num)/cav_num)*2]));
+                        int_current_relationships.Add((p / cav_num)+1);
                     }
                 }
                 //Create the cave with unknown (high) distance
-                caves.Add(new Cave(i+1, all[j], all[j+1], 0, current_relationships));
+                caves.Add(new Cave(i+1, all[j], all[j+1], 0, current_relationships, int_current_relationships));
             }
 
             //Starting and ending node
@@ -78,10 +80,6 @@ namespace Caverns_Routing_Application
                 else
                     current_cave = toVisit.Pop();
 
-                Console.WriteLine("Looking at: " + current_cave.Id + "\t");
-
-                solution.Add(current_cave);
-
                 if(current_cave == endCave)
                     success = true;
 
@@ -91,9 +89,21 @@ namespace Caverns_Routing_Application
                 //Calculate distances of neighbours
                 foreach (Cave cave in current_cave.Relationsips){
 
+                    //Distance between two relative nodes + distance from current node to beginning
                     caves[cave.Id-1].Distance = CalcDistance(caves[cave.Id-1], current_cave) + current_cave.Distance;
-                    if(!visited.Contains(caves[cave.Id-1]) && !toVisit.Contains(caves[cave.Id - 1]))
-                        toVisit.Push(caves[cave.Id-1]);
+
+                    //Want to visit if it's not been visited and it's not already planned to be visited
+                    if (!visited.Contains(caves[cave.Id - 1]))
+                    {
+                        if(!toVisit.Contains(caves[cave.Id - 1]))
+                        {
+
+                        }
+                        //Add to want t visit list
+                        toVisit.Push(caves[cave.Id - 1]);
+                    }
+                        
+                        
                     //Console.WriteLine("Considering: " + caves[cave.Id - 1].Id + " Distance: " + caves[cave.Id - 1].Distance);
                 }
                 
@@ -116,7 +126,7 @@ namespace Caverns_Routing_Application
 
             //Console.WriteLine("Distance: " + caves[caves.Count-1].Id + " " + caves[caves.Count - 1].Distance);
 
-
+            solution = visited;
 
             solution.Reverse();
             foreach (Cave i in solution) {
@@ -128,13 +138,14 @@ namespace Caverns_Routing_Application
 
             for (int i = 0; i < solution.Count; i++)
             {
-                while (!solution[i].Relationsips.Contains(solution[i + 1]))
+                if (solution[i].Id == 1) break;
+                while (!solution[i+1].Int_relationships.Contains(solution[i].Id))
                 {
                     solution.Remove(solution[i + 1]);
                 }
             }
 
-
+            Console.WriteLine("New: ");
             foreach (Cave i in solution) { Console.Write(i.Id + ", "); }
 
 
