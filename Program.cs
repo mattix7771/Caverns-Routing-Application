@@ -66,11 +66,11 @@ namespace Caverns_Routing_Application
             endCave = caves[caves.Count - 1];
             
             List<Cave> solution = new List<Cave>();
-
+            solution.Add(startCave);
 
 
             //Main search loop
-            while(success == false){
+            while (success == false){
 
                 //set urrent cave
                 Cave current_cave;
@@ -90,44 +90,28 @@ namespace Caverns_Routing_Application
                 foreach (Cave cave in current_cave.Relationsips){
 
                     //Distance between two relative nodes + distance from current node to beginning
-                    caves[cave.Id-1].Distance = CalcDistance(caves[cave.Id-1], current_cave) + current_cave.Distance;
+                    if(caves[cave.Id - 1].Distance == 0 || CalcDistance(caves[cave.Id - 1], current_cave) + current_cave.Distance < caves[cave.Id - 1].Distance)
+                        caves[cave.Id-1].Distance = CalcDistance(caves[cave.Id-1], current_cave) + current_cave.Distance;
 
-                    //Want to visit if it's not been visited and it's not already planned to be visited
-                    if (!visited.Contains(caves[cave.Id - 1]))
+                    SortStack(toVisit);
+
+                    //Add to toVisit list if it's not been visited and it's not already planned to be visited
+                    if (!visited.Contains(caves[cave.Id-1]) && !toVisit.Contains(caves[cave.Id - 1]))
                     {
-                        if(!toVisit.Contains(caves[cave.Id - 1]))
-                        {
-
-                        }
-                        //Add to want t visit list
                         toVisit.Push(caves[cave.Id - 1]);
+                        solution.Add(caves[cave.Id - 1]);
                     }
-                        
-                        
                     //Console.WriteLine("Considering: " + caves[cave.Id - 1].Id + " Distance: " + caves[cave.Id - 1].Distance);
                 }
                 
                 //Sort stack
                 SortStack(toVisit);
-
-
-                /*
-                List<Cave> temp = new List<Cave>();
-                foreach (Cave x in toVisit)
-                {
-                    temp = toVisit.ToList();
-                }
-                foreach (Cave x in temp)
-                {
-                    Console.Write(x.Id + ",");
-                }
-                Console.Write("\n");*/
             }
 
-            //Console.WriteLine("Distance: " + caves[caves.Count-1].Id + " " + caves[caves.Count - 1].Distance);
+            Console.WriteLine("Distance: " + caves[caves.Count-1].Id + " " + caves[caves.Count - 1].Distance);
 
-            solution = visited;
-
+            
+            
             solution.Reverse();
             foreach (Cave i in solution) {
                 i.Distance = 0;
@@ -135,11 +119,26 @@ namespace Caverns_Routing_Application
             }
 
             
-
+            //Solution builder
             for (int i = 0; i < solution.Count; i++)
             {
-                if (solution[i].Id == 1) break;
+                //Break at end of list
+                if (solution[i+1].Id == 1) break;
+
+                //Remove nodes if they're not connected
                 while (!solution[i+1].Int_relationships.Contains(solution[i].Id))
+                {
+                    solution.Remove(solution[i + 1]);
+                }
+            }
+
+            //Optimize solution
+            for (int i = 0; i < solution.Count; i++)
+            {
+                //Break at end of list
+                if (solution[i+2].Id == 1) break;
+
+                if (solution[i+2].Int_relationships.Contains(solution[i].Id))
                 {
                     solution.Remove(solution[i + 1]);
                 }
@@ -148,6 +147,15 @@ namespace Caverns_Routing_Application
             Console.WriteLine("New: ");
             foreach (Cave i in solution) { Console.Write(i.Id + ", "); }
 
+            //TEST
+
+            double dis = 0;
+
+            for (int i = 0; i < solution.Count-1; i++)
+            {
+                dis += CalcDistance(solution[i], solution[i+1]);
+            }
+            Console.WriteLine("TEST: " + dis);
 
 
         }
