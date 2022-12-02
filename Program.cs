@@ -56,13 +56,17 @@ namespace Caverns_Routing_Application
                     }
                 }
                 //Create the cave with unknown (high) distance
-                caves.Add(new Cave(i+1, all[j], all[j+1], 1000, current_relationships));
+                caves.Add(new Cave(i+1, all[j], all[j+1], 0, current_relationships));
             }
 
             //Starting and ending node
             startCave = caves[0];
             endCave = caves[caves.Count - 1];
             
+            List<int> solution = new List<int>();
+
+
+
             //Main search loop
             while(success == false){
 
@@ -74,7 +78,11 @@ namespace Caverns_Routing_Application
                 else
                     current_cave = toVisit.Pop();
 
-                Console.WriteLine(current_cave.Id);
+                Console.WriteLine("Looking at: " + current_cave.Id);
+                /*while(solution.Count > 0 && !current_cave.Relationsips.Contains(new Cave())){
+                    solution.Remove(solution.Last());
+                }   //1,2         7
+                solution.Add(current_cave.Id);*/
 
                 if(current_cave == endCave)
                     success = true;
@@ -82,12 +90,14 @@ namespace Caverns_Routing_Application
                 //Add cave to visited list
                 visited.Add(current_cave);
 
+                //Console.Write("Considering: ");
                 //Calculate distances of neighbours
-                foreach(Cave cave in current_cave.Relationsips){
+                foreach (Cave cave in current_cave.Relationsips){
 
                     caves[cave.Id-1].Distance = CalcDistance(caves[cave.Id-1], current_cave) + current_cave.Distance;
                     if(!visited.Contains(caves[cave.Id-1]))
                         toVisit.Push(caves[cave.Id-1]);
+                    Console.WriteLine("Considering: " + caves[cave.Id - 1].Id + " Distance: " + caves[cave.Id - 1].Distance);
                 }
                 
                 //Sort stack
@@ -104,7 +114,6 @@ namespace Caverns_Routing_Application
         //Eucledean distance calculator
         public static double CalcDistance(Cave x, Cave y){
             double distance = Math.Sqrt( Math.Pow(y.XCoordinate - x.XCoordinate, 2) + Math.Pow(y.YCoordinate - x.YCoordinate, 2) );
-            distance -= 1000;
             return distance;
         }
 
