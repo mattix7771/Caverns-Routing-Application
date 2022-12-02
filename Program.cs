@@ -63,7 +63,7 @@ namespace Caverns_Routing_Application
             startCave = caves[0];
             endCave = caves[caves.Count - 1];
             
-            List<int> solution = new List<int>();
+            List<Cave> solution = new List<Cave>();
 
 
 
@@ -78,11 +78,9 @@ namespace Caverns_Routing_Application
                 else
                     current_cave = toVisit.Pop();
 
-                Console.WriteLine("Looking at: " + current_cave.Id);
-                /*while(solution.Count > 0 && !current_cave.Relationsips.Contains(new Cave())){
-                    solution.Remove(solution.Last());
-                }   //1,2         7
-                solution.Add(current_cave.Id);*/
+                Console.WriteLine("Looking at: " + current_cave.Id + "\t");
+
+                solution.Add(current_cave);
 
                 if(current_cave == endCave)
                     success = true;
@@ -90,25 +88,57 @@ namespace Caverns_Routing_Application
                 //Add cave to visited list
                 visited.Add(current_cave);
 
-                //Console.Write("Considering: ");
                 //Calculate distances of neighbours
                 foreach (Cave cave in current_cave.Relationsips){
 
                     caves[cave.Id-1].Distance = CalcDistance(caves[cave.Id-1], current_cave) + current_cave.Distance;
-                    if(!visited.Contains(caves[cave.Id-1]))
+                    if(!visited.Contains(caves[cave.Id-1]) && !toVisit.Contains(caves[cave.Id - 1]))
                         toVisit.Push(caves[cave.Id-1]);
-                    Console.WriteLine("Considering: " + caves[cave.Id - 1].Id + " Distance: " + caves[cave.Id - 1].Distance);
+                    //Console.WriteLine("Considering: " + caves[cave.Id - 1].Id + " Distance: " + caves[cave.Id - 1].Distance);
                 }
                 
                 //Sort stack
                 SortStack(toVisit);
+
+
+                /*
+                List<Cave> temp = new List<Cave>();
+                foreach (Cave x in toVisit)
+                {
+                    temp = toVisit.ToList();
+                }
+                foreach (Cave x in temp)
+                {
+                    Console.Write(x.Id + ",");
+                }
+                Console.Write("\n");*/
+            }
+
+            //Console.WriteLine("Distance: " + caves[caves.Count-1].Id + " " + caves[caves.Count - 1].Distance);
+
+
+
+            solution.Reverse();
+            foreach (Cave i in solution) {
+                i.Distance = 0;
+                Console.Write(i.Id + ", "); 
+            }
+
+            
+
+            for (int i = 0; i < solution.Count; i++)
+            {
+                while (!solution[i].Relationsips.Contains(solution[i + 1]))
+                {
+                    solution.Remove(solution[i + 1]);
+                }
             }
 
 
+            foreach (Cave i in solution) { Console.Write(i.Id + ", "); }
 
-            
 
-            
+
         }
 
         //Eucledean distance calculator
