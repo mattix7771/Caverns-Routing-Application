@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\matti\\OneDrive\\Napier\\S3 - Artificial Intelligence\\Caverns Routing Application\\Caverns Routing Application.csproj",
+      "projectUniqueName": "C:\\Users\\matti\\OneDrive\\Napier\\S3 - Artificial Intelligence\\Caverns-Routing-Application\\Caverns Routing Application.csproj",
       "projectName": "Caverns Routing Application",
-      "projectPath": "C:\\Users\\matti\\OneDrive\\Napier\\S3 - Artificial Intelligence\\Caverns Routing Application\\Caverns Routing Application.csproj",
+      "projectPath": "C:\\Users\\matti\\OneDrive\\Napier\\S3 - Artificial Intelligence\\Caverns-Routing-Application\\Caverns Routing Application.csproj",
       "packagesPath": "C:\\Users\\matti\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\matti\\OneDrive\\Napier\\S3 - Artificial Intelligence\\Caverns Routing Application\\obj\\",
+      "outputPath": "C:\\Users\\matti\\OneDrive\\Napier\\S3 - Artificial Intelligence\\Caverns-Routing-Application\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -66,7 +66,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

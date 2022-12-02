@@ -25,7 +25,7 @@ namespace Caverns_Routing_Application
             //Get file location from argument
             
             //string path = args[0] + ".cav";
-            string path  = @"C:\Users\matti\OneDrive\Napier\S3 - Artificial Intelligence\Caverns-Routing-Application\input1.cav";
+            string path  = @"C:\Users\matti\OneDrive\Napier\S3 - Artificial Intelligence\Caverns-Routing-Application\generated30-1.cav";
 
             //Check if file exists
             if(!File.Exists(path)){
@@ -44,15 +44,15 @@ namespace Caverns_Routing_Application
             //Caves relationships
             int[] relationships = all.Skip(cav_num*2+1).ToArray();
 
-            //Add info to Cave objects
+            //Add info and create Cave objects
             for(int i = 0, j = 1; i < cav_num; i++, j+=2){
                 List <Cave> current_relationships = new List<Cave>();
 
-                for(int p = 0; p/7 < cav_num; p+=cav_num){
+                for(int p = 0; p/cav_num < cav_num; p+=cav_num){
                     int temp = relationships[i+p];
 
                     if(temp != 0){
-                        current_relationships.Add(new Cave((p/7)+1, all[(((p+7)/7)*2)-1], all[((p+7)/7)*2]));
+                        current_relationships.Add(new Cave((p/cav_num)+1, all[(((p+cav_num)/cav_num)*2)-1], all[((p+cav_num)/cav_num)*2]));
                     }
                 }
                 //Create the cave with unknown (high) distance
@@ -62,7 +62,6 @@ namespace Caverns_Routing_Application
             //Starting and ending node
             startCave = caves[0];
             endCave = caves[caves.Count - 1];
-
             
             //Main search loop
             while(success == false){
@@ -95,7 +94,7 @@ namespace Caverns_Routing_Application
                 SortStack(toVisit);
             }
 
-            
+
 
             
 
